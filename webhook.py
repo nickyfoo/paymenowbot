@@ -218,7 +218,7 @@ def execute_command(chat_id, command):
     add_tax(chat_id, toks[1:])
 
 
-@app.route('/', methods=['POST', 'GET'])
+@app.route(f'/{token}', methods=['POST', 'GET'])
 def index():
   if request.method == 'POST':
     msg = request.get_json()
@@ -234,4 +234,4 @@ def index():
 
 
 if __name__ == '__main__':
-  app.run(host='0.0.0.0', debug=True)
+  app.run(host='0.0.0.0')
