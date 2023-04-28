@@ -183,26 +183,32 @@ def get_cost_output(chat_id):
 
 def add_cost(chat_id, toks):
   if len(toks) == 0: return
-  price = float(toks[0])
-  involved_names = context.chat_data[chat_id].involved_names
-  num_people = len(involved_names)
-  split_price = get_split_price(price, num_people)
+  try:
+    price = float(toks[0])
+    involved_names = context.chat_data[chat_id].involved_names
+    num_people = len(involved_names)
+    split_price = get_split_price(price, num_people)
 
-  for name in involved_names:
-    context.chat_data[chat_id].cost_per_person[name] += split_price
+    for name in involved_names:
+      context.chat_data[chat_id].cost_per_person[name] += split_price
 
-  send_message_with_keyboard(chat_id)
+    send_message_with_keyboard(chat_id)
+  except ValueError:
+    return
 
 
 #give the percentage of tax to be added in percent
 def add_tax(chat_id, toks):
   if len(toks) == 0: return
-  tax = float(toks[0])
-  cost_per_person = context.chat_data[chat_id].cost_per_person
-  for key, val in cost_per_person.items():
-    cost_per_person[key] = val * (100 + tax) / 100
+  try:
+    tax = float(toks[0])
+    cost_per_person = context.chat_data[chat_id].cost_per_person
+    for key, val in cost_per_person.items():
+      cost_per_person[key] = val * (100 + tax) / 100
 
-  send_message_with_keyboard(chat_id)
+    send_message_with_keyboard(chat_id)
+  except ValueError:
+    return
 
 
 def execute_command(chat_id, command):
