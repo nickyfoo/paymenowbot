@@ -36,9 +36,15 @@ def build_keyboard(chat_id):
 def get_reply_markup(chat_id):
   return json.dumps({'inline_keyboard': build_keyboard(chat_id)})
 
-def get_reply_text(chat_id):
-  return f'Current costs are:\n{get_cost_output(chat_id)}\n\nSo far you\'ve selected {get_involved_names_output(chat_id)}. Select (or deselect) the next person:'
+def get_subtotal(chat_id):
+  costs = context.chat_data[chat_id].cost_per_person
+  sum = 0
+  for _, val in costs.items():
+    sum += get_ceil_price(val)
+  return get_ceil_price(sum)
 
+def get_reply_text(chat_id):
+  return f'Current costs are:\n{get_cost_output(chat_id)}\nSubtotal is: {get_subtotal(chat_id)}\n(Note that cents are rounded up)\n\nSo far you\'ve selected {get_involved_names_output(chat_id)}. Select (or deselect) the next person:'
 
 def send_message(chat_id, text):
   url = f'https://api.telegram.org/bot{token}/sendMessage'
