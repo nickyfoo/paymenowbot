@@ -15,7 +15,10 @@ def index():
     if 'callback_query' in msg:
       handle_callback(msg)
     else:
-      handle_command(msg)
+      try:
+        handle_command(msg)
+      except KeyError:
+        pass
     return Response('ok', status=200)
   else:
     return Response('ok', status=200)
