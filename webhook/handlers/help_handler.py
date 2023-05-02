@@ -20,6 +20,8 @@ e.g. "/addtax 18.8"
 This adds a tax of 18.8% to all recorded transactions.
 
 You can then copy and paste the costs to send to your friends :)
+
+If you found this helpful and want to contribute to my next cup of bubble tea, here's a paylah link: shorturl.at/alF08 :)
 '''
 
 def help_handler(chat_id):
